@@ -1,4 +1,5 @@
 import numpy as np
+
 class Map:
     def __init__(self, width, height):
         self.width = width
@@ -20,6 +21,3 @@ class Map:
             return
     
 
-map_obj = Map(10, 10)
-map_obj.boat(5, 1, 2, 'v')
-map_obj.display()
