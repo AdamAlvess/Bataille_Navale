@@ -10,7 +10,7 @@ class Joueur:
         for bateau in self.bateaux:
             placed = False
             while not placed:
-                taille, orientation = bateau
+                taille = bateau
                 print(f"{self.nom}, placez votre bateau de taille {taille}:")
                 x = int(input("Entrez la coordonnée X du coin supérieur gauche du bateau (0-9) : "))
                 y = int(input("Entrez la coordonnée Y du coin supérieur gauche du bateau (0-9) : "))
