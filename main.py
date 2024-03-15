@@ -1,9 +1,10 @@
 from map import Map
+from joueur import Joueur
 
 def main():
     map_obj = Map(10, 10)
-    map_obj.place_boat(3, 5, 1, 'v')
-    map_obj.display()
+    joueur = Joueur('Joueur 1', 10)
+    joueur.placer_bateaux() 
     
 if __name__ == '__main__':
     main()

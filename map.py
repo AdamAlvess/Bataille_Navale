@@ -6,10 +6,9 @@ class Map:
         self.height = height
         self.map = np.array([['.' for _ in range(width)] for _ in range(height)])
 
-    def display(self):
-        for row in self.map:
-            print(' '.join(row))
-    def place_boat(self,taille, x, y, orientation):
+    
+
+    def update_map(self, x, y, taille, orientation):
         if orientation == 'h':
             for i in range(taille):
                 self.map[x][y+i] = 'X'
@@ -18,6 +17,7 @@ class Map:
                 self.map[x+i][y] = 'X'
         else:
             print('Orientation non valide')
-            return
-    
 
+    def update_display(self):
+        for row in self.map:
+            print(' '.join(row))
