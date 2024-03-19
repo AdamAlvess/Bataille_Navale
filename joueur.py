@@ -50,13 +50,24 @@ class Joueur:
         self.carte.update_display()
 
         # check bateau
-        print("\n\n Vous allez tirer sur un bateau: \n")
-        xShoot = int(input("Entrez la coordonnée X du bateau (0-9) : "))
-        yShoot = input("Entrez la coordonnée Y du bateau (A-J) : ").upper()
-        checker = self.carte.checkBateau(xShoot, yShoot)
-        checker
+        lose = False
+        cpt = 0
+        while not lose:
+            print("\n\nA votre tour de tirer sur un bateau: \n")
+            xShoot = int(input("Entrez la coordonnée X du bateau (0-9) : "))
+            yShoot = input("Entrez la coordonnée Y du bateau (A-J) : ").upper()
+            checker = self.carte.checkBateau(xShoot, yShoot)
+            checker
 
-        # tirer bateau
-        if checker == True:
-            print("Bateau touché")
-            self.carte.tirerBateau(xShoot, yShoot)
+            # tirer bateau
+            if checker == True:
+                print("Bateau touché")
+                self.carte.tirerBateau(xShoot, yShoot)
+                cpt += 1
+                print(cpt)
+            if cpt == 3:
+                lose = True
+
+            # add joueur 2 et remplacer cpt par if 0 bateau left ou if bateau all touche
+
+        print("Thanks for playing")
