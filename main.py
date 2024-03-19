@@ -1,12 +1,12 @@
-import bateau
-from enumBateau import EnumBateau
+from joueur import Joueur
+from map import Map
 
 
 def main():
 
-    bateau1 = bateau.Bateau("Bateau1", 2, EnumBateau.Vertical, 0)
+    joueur = Joueur('Joueur 1', 10)
+    joueur.placer_bateaux()
 
-    print(bateau1.orientation)
 
-
-main()
+if __name__ == '__main__':
+    main()

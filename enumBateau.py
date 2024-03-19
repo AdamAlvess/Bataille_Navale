@@ -3,5 +3,5 @@ from enum import Enum
 
 class EnumBateau(Enum):
 
-    Vertical = 1
-    Horizontal = 2
+    VERTICAL = 1
+    HORIZONTAL = 2
