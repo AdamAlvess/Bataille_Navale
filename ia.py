@@ -19,21 +19,21 @@ class IA:
                     if x < 0 or x >= self.carte.height or y < 0 or y + taille > self.carte.width:
                         continue
                     for i in range(taille):
-                        if self.carte.map.iloc[x, y + i] != '.':
+                        if self.carte.mapper.iloc[x, y + i] != '.':
                             break
                     else:
                         for i in range(taille):
-                            self.carte.map.iloc[x, y + i] = 'X'
+                            self.carte.mapper.iloc[x, y + i] = 'X'
                         placed = True
                 elif orientation == 'v':
                     if x < 0 or x + taille > self.carte.height or y < 0 or y >= self.carte.width:
                         continue
                     for i in range(taille):
-                        if self.carte.map.iloc[x + i, y] != '.':
+                        if self.carte.mapper.iloc[x + i, y] != '.':
                             break
                     else:
                         for i in range(taille):
-                            self.carte.map.iloc[x + i, y] = 'X'
+                            self.carte.mapper.iloc[x + i, y] = 'X'
                         placed = True
 
     def attaquer(self, adversaire):

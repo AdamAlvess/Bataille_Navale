@@ -1,5 +1,4 @@
 from joueur import Joueur
-from map import Map
 from ia import IA
 
 def main():
@@ -17,7 +16,7 @@ def main():
             
         print("Carte du joueur mise à jour:")
         joueur.carte.update_display()
-
+        ia.carte.update_display()
     if joueur.carte.est_vide():
         print("L'IA a gagné !")
     else:

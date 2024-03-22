@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 
-class mapper:
+class Map:
 
     def __init__(self, width, height):
         self.width = width
