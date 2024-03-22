@@ -1,11 +1,12 @@
-import map
+from map import Map
+import random
 
 
 class Joueur:
     def __init__(self, nom, taille_carte):
         self.nom = nom
-        self.carte = map.Map(taille_carte, taille_carte)
-        self.bateaux = [5, 4, 3, 3, 2]
+        self.carte = Map(taille_carte, taille_carte)
+        self.bateaux = [5, 4, 3, 3, 2]  
 
     def placer_bateaux(self):
         for taille in self.bateaux:
@@ -48,8 +49,6 @@ class Joueur:
                 else:
                     print("Orientation invalide. Réessayez.")
         self.carte.update_display()
-
-        # check bateau
         lose = False
         cpt = 0
         while not lose:
@@ -71,3 +70,15 @@ class Joueur:
             # add joueur 2 et remplacer cpt par if 0 bateau left ou if bateau all touche
 
         print("Thanks for playing")
+
+    def attaquer(self, adversaire):
+        x, y = self.choisir_cible()
+        adversaire.carte.recevoir_attaque(x, y)
+
+    def choisir_cible(self):
+        print(f"{self.nom}, choisissez une cible :")
+        x = int(input("Entrez la coordonnée X de la cible (0-9) : "))
+        colonne = input("Entrez la colonne de la cible (A-J) : ").upper()
+        y = ord(colonne) - ord('A') 
+        return x, y
+
