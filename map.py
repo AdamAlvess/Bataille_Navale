@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import time
 
 
 class Map:
@@ -31,8 +32,17 @@ class Map:
     def est_vide(self):
         return not (self.mapper == 'X').any().any()
 
-    def update_display(self):
-        print(self.mapper)
+    def update_display(self, nom):
+        if nom == "IA":
+
+            time.sleep(3)
+            print("\n\n\n          IA")
+
+            mapIA = self.mapper.replace('X', '.')
+            print(mapIA)
+        else:
+            print("joueur la")
+            print(self.mapper)
 
     def checkBateau(self, x, y):
         convertY = ord(y) - ord('A')

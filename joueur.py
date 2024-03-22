@@ -6,7 +6,7 @@ class Joueur:
     def __init__(self, nom, taille_carte):
         self.nom = nom
         self.carte = Map(taille_carte, taille_carte)
-        self.bateaux = [5, 4, 3, 3, 2]  
+        self.bateaux = [5, 4, 3, 3, 2]
 
     def placer_bateaux(self):
         for taille in self.bateaux:
@@ -48,7 +48,7 @@ class Joueur:
                         placed = True
                 else:
                     print("Orientation invalide. Réessayez.")
-        self.carte.update_display()
+        self.carte.update_display(self.nom)
 
         print("Thanks for playing")
 
@@ -60,6 +60,5 @@ class Joueur:
         print(f"{self.nom}, choisissez une cible :")
         x = int(input("Entrez la coordonnée X de la cible (0-9) : "))
         colonne = input("Entrez la colonne de la cible (A-J) : ").upper()
-        y = ord(colonne) - ord('A') 
+        y = ord(colonne) - ord('A')
         return x, y
-
