@@ -17,5 +17,16 @@ class Map:
         else:
             print('Orientation non valide')
 
+    def recevoir_attaque(self, x, y):
+        if self.map.iloc[x, y] == 'X':
+            print("Touché !")
+            self.map.iloc[x, y] = 'T'
+        else:
+            print("Dans l'eau !")
+            self.map.iloc[x, y] = 'O'
+
+    def est_vide(self):
+        return not (self.map == 'X').any().any()
+
     def update_display(self):
         print(self.map)
