@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 import numpy as np
 
 
@@ -34,14 +34,15 @@ class MatrixFrame(tk.Frame):
     def place_boats(self, boat_data):
         for boat in boat_data:
             nom, size, letter, number, orientation = boat
-            x = ord(letter) - ord('A')  # Convertir la lettre en un indice de colonne
-            y = int(number)  # Convertir le nombre en un indice de ligne
-            if orientation == 'h':
-                for i in range(size):
-                    self.canvas.create_rectangle(x * 50 + i * 50 + 25, y * 50 + 25, x * 50 + (i + 1) * 50 + 25, y * 50 + 75, fill='red')
-            else:
-                for i in range(size):
-                    self.canvas.create_rectangle(x * 50 + 25, y * 50 + i * 50 + 25, x * 50 + 75, y * 50 + (i + 1) * 50 + 25, fill='red')
+            if letter is not None:  # Vérifier si la lettre est sélectionnée
+                x = ord(letter) - ord('A')  # Convertir la lettre en un indice de colonne
+                y = int(number)  # Convertir le nombre en un indice de ligne
+                if orientation == 'h':
+                    for i in range(size):
+                        self.canvas.create_rectangle(x * 50 + i * 50 + 25, y * 50 + 25, x * 50 + (i + 1) * 50 + 25, y * 50 + 75, fill='red')
+                else:
+                    for i in range(size):
+                        self.canvas.create_rectangle(x * 50 + 25, y * 50 + i * 50 + 25, x * 50 + 75, y * 50 + (i + 1) * 50 + 25, fill='red')
 
 
 class BoatBox(tk.Frame):
@@ -51,8 +52,11 @@ class BoatBox(tk.Frame):
         self.canvas = tk.Canvas(self, width=350, height=600)  # Création du canevas pour la boîte à bateaux
         self.canvas.grid(row=1, column=2, padx=20, pady=20)  # Déplacer le BoatBox vers la droite avec une marge de 20 pixels
         self.boat_data = np.empty((5, 5), dtype=object)  # Tableau NumPy pour stocker les données des bateaux
+        self.occupied_cells = set()  # Maintenir une liste des cases occupées par les bateaux
         self.add_boat_box()
         self.add_buttons()  # Appel à la méthode pour ajouter les boutons
+        self.play_button = tk.Button(self, text="Play", command=self.start_game, state='disabled')
+        self.play_button.grid(row=2, column=2, pady=10)
 
     def add_boat_box(self):
         # Ajout du contenu de la boîte pour les bateaux
@@ -91,17 +95,67 @@ class BoatBox(tk.Frame):
             validate_button.place(x=x_offset + 180, y=y_offset - 2)
 
     def validate_and_place(self, nom, size, letter, number, orientation):
-        # Fonction pour valider et placer le bateau
+        # Vérifier s'il y a déjà un bateau de ce type
+        for boat in self.boat_data:
+            if boat[0] == nom:
+                messagebox.showerror("Erreur", f"Vous ne pouvez placer qu'un seul bateau de taille {size}.")
+                return
+
+        # Vérifier si le bateau dépasse les
+        x = ord(letter) - ord('A')
+        y = int(number)
+
+        if orientation == 'h':
+            if x + size > 10:
+                messagebox.showerror("Erreur", "Le bateau dépasse la limite de la matrice.")
+                return
+
+            for i in range(size):
+                if (x + i, y) in self.occupied_cells:
+                    messagebox.showerror("Erreur", "Collision détectée. Veuillez replacer le bateau.")
+                    return
+                if ((x + i, y - 1) in self.occupied_cells or
+                    (x + i, y + 1) in self.occupied_cells):
+                    messagebox.showerror("Erreur", "Il doit y avoir au moins une case vide entre deux bateaux.")
+                    return
+                self.occupied_cells.add((x + i, y))
+        else:
+            if y + size > 10:
+                messagebox.showerror("Erreur", "Le bateau dépasse la limite de la matrice.")
+                return
+
+            for i in range(size):
+                if (x, y + i) in self.occupied_cells:
+                    messagebox.showerror("Erreur", "Collision détectée. Veuillez replacer le bateau.")
+                    return
+                if ((x - 1, y + i) in self.occupied_cells or
+                    (x + 1, y + i) in self.occupied_cells):
+                    messagebox.showerror("Erreur", "Il doit y avoir au moins une case vide entre deux bateaux.")
+                    return
+                self.occupied_cells.add((x, y + i))
+
+        # Enregistrer les données du bateau
         self.boat_data[nom - 1] = [nom, size, letter, number, orientation]
         print(f"Bateau {nom} validé et placé. Données enregistrées : {self.boat_data[nom - 1]}")
         self.master.matrix_frame.place_boats(self.boat_data)
+        
+        # Vérifier si tous les bateaux ont été placés
+        if all(self.boat_data[i][0] is not None for i in range(5)):
+            self.play_button.config(state='normal')  # Activer le bouton "Play"
+
+        self.master.matrix_frame.place_boats(self.boat_data)
+        
+    def start_game(self):
+    # Logique pour démarrer le jeu ici
+        pass
+
 
 
 class MyWindow(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self.configure(bg='light blue')
-        self.geometry('1400x900+0+0')  # Augmentation de la largeur de la fenêtre
+        self.geometry('1400x900+0+0')
         self.title_label = tk.Label(self, text="Bataille navale", width=30, height=2, bg='red', fg='brown', font=('Arial', 40))
         self.title_label.grid(row=0, column=0, columnspan=2, padx=20, pady=20)
         self.matrix_frame = MatrixFrame(self)
@@ -113,3 +167,5 @@ if __name__ == '__main__':
     app = MyWindow()
     app.mainloop()
 
+       
+#mettre en gris le bateau utiliser
