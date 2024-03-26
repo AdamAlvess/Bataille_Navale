@@ -20,21 +20,25 @@ class IA:
                     if x < 1 or x > self.carte.height or y < 1 or y + taille - 1 > self.carte.width:
                         continue
                     for i in range(taille):
+
                         if self.carte.mapper.iloc[x - 1, y + i - 1] != '.':
                             break
                     else:
                         for i in range(taille):
                             self.carte.mapper.iloc[x - 1, y + i - 1] = 'X'
+
                         placed = True
                 elif orientation == 'v':
                     if x < 1 or x + taille - 1 > self.carte.height or y < 1 or y > self.carte.width:
                         continue
                     for i in range(taille):
+
                         if self.carte.mapper.iloc[x + i - 1, y - 1] != '.':
                             break
                     else:
                         for i in range(taille):
                             self.carte.mapper.iloc[x + i - 1, y - 1] = 'X'
+
                         placed = True
 
     def attaquer(self, adversaire):
@@ -45,10 +49,9 @@ class IA:
         adversaire.carte.recevoir_attaque(x, y)
         self.coup_recorder.save((x, y))
 
-
     def choisir_cible(self):
-        x = random.randint(0, self.carte.height - 1)
-        y = random.randint(0, self.carte.width - 1)
+        x = random.randint(1, self.carte.height)  
+        y = random.randint(1, self.carte.width)  
         return x, y
 
 

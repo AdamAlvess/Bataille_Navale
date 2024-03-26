@@ -1,11 +1,12 @@
 from map import Map
 import random
 
+
 class Joueur:
     def __init__(self, nom, taille_carte):
         self.nom = nom
         self.carte = Map(taille_carte, taille_carte)
-        self.bateaux = [5, 4, 3, 3, 2]  
+        self.bateaux = [5, 4, 3, 3, 2]
 
     def placer_bateaux(self):
         for taille in self.bateaux:
@@ -43,7 +44,7 @@ class Joueur:
                         placed = True
                 else:
                     print("Orientation invalide. Réessayez.")
-        self.carte.update_display()
+        self.carte.update_display(self.nom)
 
     def attaquer(self, adversaire):
         x, y = self.choisir_cible()
@@ -51,7 +52,7 @@ class Joueur:
 
     def choisir_cible(self):
         print(f"{self.nom}, choisissez une cible :")
-        x = int(input("Entrez la coordonnée X de la cible (0-9) : "))
+        x = int(input("Entrez la coordonnée X de la cible (1-10) : "))
         colonne = input("Entrez la colonne de la cible (A-J) : ").upper()
-        y = ord(colonne) - ord('A') 
+        y = ord(colonne) - ord('A') + 1  
         return x, y

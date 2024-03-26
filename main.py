@@ -1,6 +1,7 @@
 from joueur import Joueur
 from ia import IA
 
+
 def main():
     partie = 0
     while True:
@@ -21,7 +22,8 @@ def main():
                 ia.attaquer(joueur)
 
                 print("Carte du joueur mise à jour:")
-                joueur.carte.update_display()
+                joueur.carte.update_display(joueur.nom)
+                ia.carte.update_display(ia.nom)
      
             if joueur.carte.est_vide():
                 print("L'IA a gagné !")
@@ -38,6 +40,8 @@ def main():
             break
         else:
             print("Choix invalide. Veuillez choisir 1 ou 2.")
+
+
 
 if __name__ == '__main__':
     main()
