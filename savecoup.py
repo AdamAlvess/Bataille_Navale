@@ -27,3 +27,5 @@ class SaveCoup:
     def delimite_partie(self):
         with open(self.file_path, 'a', newline='') as file:
             file.write('### Fin de la partie ###\n')
+
+        

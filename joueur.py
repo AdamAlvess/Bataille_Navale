@@ -12,34 +12,34 @@ class Joueur:
             placed = False
             while not placed:
                 print(f"{self.nom}, placez votre bateau de taille {taille}:")
-                x = int(input("Entrez la coordonnée X du coin supérieur gauche du bateau (0-9) : "))
+                x = int(input("Entrez la coordonnée X du coin supérieur gauche du bateau (1-10) : ")) 
                 colonne = input("Entrez la colonne du coin supérieur gauche du bateau (A-J) : ").upper()
-                y = ord(colonne) - ord('A') 
+                y = ord(colonne) - ord('A') + 1  
                 orientation_input = input("Entrez l'orientation que vous souhaitez pour votre bateau (v ou h) : ").lower()
                 
                 if orientation_input == 'h':
-                    if x < 0 or x >= self.carte.height or y < 0 or y + taille > self.carte.width:
+                    if x < 1 or x > self.carte.height or y < 1 or y + taille - 1 > self.carte.width:
                         print("Placement invalide. Réessayez.")
                         continue
                     for i in range(taille):
-                        if self.carte.mapper.iloc[x, y + i] != '.':
+                        if self.carte.mapper.iloc[x - 1, y + i - 1] != '.':
                             print("Les bateaux se chevauchent. Réessayez.")
                             break
                     else:
                         for i in range(taille):
-                            self.carte.mapper.iloc[x, y + i] = 'X'
+                            self.carte.mapper.iloc[x - 1, y + i - 1] = 'X'
                         placed = True
                 elif orientation_input == 'v':
-                    if x < 0 or x + taille > self.carte.height or y < 0 or y >= self.carte.width:
+                    if x < 1 or x + taille - 1 > self.carte.height or y < 1 or y > self.carte.width:
                         print("Placement invalide. Réessayez.")
                         continue
                     for i in range(taille):
-                        if self.carte.mapper.iloc[x + i, y] != '.':
+                        if self.carte.mapper.iloc[x + i - 1, y - 1] != '.':
                             print("Les bateaux se chevauchent. Réessayez.")
                             break
                     else:
                         for i in range(taille):
-                            self.carte.mapper.iloc[x + i, y] = 'X'
+                            self.carte.mapper.iloc[x + i - 1, y - 1] = 'X'
                         placed = True
                 else:
                     print("Orientation invalide. Réessayez.")

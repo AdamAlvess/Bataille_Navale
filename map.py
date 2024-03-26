@@ -5,7 +5,8 @@ class Map:
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        self.mapper = pd.DataFrame(np.full((height, width), '.'), columns=[chr(65 + i) for i in range(width)], index=range(height))
+        index_labels = [str(i) for i in range(1, height + 1)]
+        self.mapper = pd.DataFrame(np.full((height, width), '.'), columns=[chr(65 + i) for i in range(width)], index=index_labels)
 
     def update_map(self, x, y, taille, orientation):
         if orientation == 'h':

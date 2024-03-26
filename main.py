@@ -2,7 +2,6 @@ from joueur import Joueur
 from ia import IA
 
 def main():
-    
     partie = 0
     while True:
         print("Menu:")

@@ -12,29 +12,29 @@ class IA:
         for taille in self.bateaux:
             placed = False
             while not placed:
-                x = random.randint(0, self.carte.height - 1)
-                y = random.randint(0, self.carte.width - 1)
+                x = random.randint(1, self.carte.height)  
+                y = random.randint(1, self.carte.width)
                 orientation = random.choice(['h', 'v'])
 
                 if orientation == 'h':
-                    if x < 0 or x >= self.carte.height or y < 0 or y + taille > self.carte.width:
+                    if x < 1 or x > self.carte.height or y < 1 or y + taille - 1 > self.carte.width:
                         continue
                     for i in range(taille):
-                        if self.carte.mapper.iloc[x, y + i] != '.':
+                        if self.carte.mapper.iloc[x - 1, y + i - 1] != '.':
                             break
                     else:
                         for i in range(taille):
-                            self.carte.mapper.iloc[x, y + i] = 'X'
+                            self.carte.mapper.iloc[x - 1, y + i - 1] = 'X'
                         placed = True
                 elif orientation == 'v':
-                    if x < 0 or x + taille > self.carte.height or y < 0 or y >= self.carte.width:
+                    if x < 1 or x + taille - 1 > self.carte.height or y < 1 or y > self.carte.width:
                         continue
                     for i in range(taille):
-                        if self.carte.mapper.iloc[x + i, y] != '.':
+                        if self.carte.mapper.iloc[x + i - 1, y - 1] != '.':
                             break
                     else:
                         for i in range(taille):
-                            self.carte.mapper.iloc[x + i, y] = 'X'
+                            self.carte.mapper.iloc[x + i - 1, y - 1] = 'X'
                         placed = True
 
     def attaquer(self, adversaire):
