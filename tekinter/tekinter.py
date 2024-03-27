@@ -1,7 +1,6 @@
 import tkinter as tk
 from Boat import *
 from Matrice import MatrixFrame
-from InteractiveMatrixFrame import *
 
 
 class MyWindow(tk.Tk):
@@ -15,9 +14,7 @@ class MyWindow(tk.Tk):
         self.matrix_frame.grid(row=1, column=0)
         self.boat_box = BoatBox(self)
         self.boat_box.grid(row=1, column=2, padx=20)
-        
-        self.boat_box.bind_click_event() 
-        
+          
     
 
 if __name__ == '__main__':
